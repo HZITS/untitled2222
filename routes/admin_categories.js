@@ -1,16 +1,17 @@
 let express = require('express');
 let router = express.Router();
 
-// get page model
-let Page = require('../models/page')
+// GET category model
+let Category = require('../models/category')
 
 /*
- * GET pages index
+ * GET category index
  */
 router.get('/', function (req, res) {
-    Page.find({}).sort({sorting: 1}).exec(function (err, pages) {
-        res.render('admin/pages', {
-           pages: pages
+    Category.find(function (err, categories) {
+        if (err) return console.log(err);
+        res.render('admin/categories', {
+            categories: categories
         });
     });
 });
