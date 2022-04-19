@@ -1,5 +1,6 @@
 let express = require('express');
 let router = express.Router();
+let auth = require('../config/auth');
 
 // GET category model
 let Category = require('../models/category')

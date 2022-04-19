@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
+let mongoose = require('mongoose');
 
 // page schema
-var PageSchema = mongoose.Schema({
+let PageSchema = mongoose.Schema({
    title: {
        type: String,
        required: true
@@ -18,4 +18,4 @@ var PageSchema = mongoose.Schema({
     },
 });
 
-var Page = module.exports = mongoose.model('Page', PageSchema);
+let Page = module.exports = mongoose.model('Page', PageSchema);
