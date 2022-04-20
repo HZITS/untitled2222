@@ -21,7 +21,7 @@ router.post('/',(req, res) => {
       console.log(exchangeRate);
       res.send("Current exchange rate of "+currency+" in USD is: "+exchangeRate);
     });
-  })
-})
+  });
+});
 
 module.exports = router;
