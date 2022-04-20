@@ -2,14 +2,17 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require("body-parser");
 const https = require('https');
+const path = require("path");
 
 router.use(bodyParser.urlencoded({extended:true}));
 
 router.get('/', function (req, res) {
     res.render('index', {
-        title: 'Home',
+        title: "Home",
+        ans: 1,
+        c: 1
     });
-})
+});
 
 router.post('/',(req, res) => {
     let currency=req.body.currency;
@@ -18,9 +21,9 @@ router.post('/',(req, res) => {
     https.get(url,(response)=>{
         response.on('data', (d) => {
             let json=JSON.parse(d);
-            let exchangeRate=json.src_side_base[0].rate;
+            let exchangeRate=json.rate;
             console.log(exchangeRate);
-            res.send("Current exchange rate of "+currency+" in USD is: "+exchangeRate);
+            res.render(path.resolve('views/index.ejs'),{title: "Home", ans: currency, c: exchangeRate});
         });
     });
 });
