@@ -9,6 +9,7 @@ var session = require('express-session');
 var expressValidator = require('express-validator');
 var messages = require('express-messages');
 var fileUpload = require('express-fileupload');
+var passport = require('passport');
 
 var config = require('./config/database.js');
 var port = 4000;
@@ -125,11 +126,21 @@ app.use(expressValidator({
 //express-messages middleware
 app.use(require('connect-flash')());
 app.use(function (req, res, next) {
-  res.locals.messages = messages(req, res);
+  res.locals.messages = require('express-messages')(req, res);
   next();
 });
 
 // passport config
+require('./config/passport')(passport);
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get('*', function(req,res,next) {
+  res.locals.cart = req.session.cart;
+  res.locals.user = req.user || null;
+  next();
+});
 
 // setting routes
 var pages = require('./routes/pages.js');
@@ -139,7 +150,6 @@ var users = require('./routes/users.js');
 var adminPages = require('./routes/admin_pages.js');
 var adminCategories = require('./routes/admin_categories.js');
 var adminProducts = require('./routes/admin_products.js');
-const {body} = require("express-validator/check");
 
 app.use('/admin/pages', adminPages);
 app.use('/admin/categories', adminCategories);

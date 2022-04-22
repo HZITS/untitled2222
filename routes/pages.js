@@ -6,12 +6,42 @@ const path = require("path");
 
 router.use(bodyParser.urlencoded({extended:true}));
 
+// get page model
+let Page = require('../models/page');
+
 router.get('/', function (req, res) {
-    res.render('index', {
-        title: "Home",
-        ans: 1,
-        c: 1
+    Page.findOne({slug: 'home'}, function (err, page) {
+        if (err)
+            console.log(err);
+
+        res.render('index', {
+            title: page.title,
+            content: page.content,
+            ans: " ",
+            c: " "
+        });
     });
+});
+
+router.get('/:slug', function (req, res) {
+
+    let slug = req.params.slug;
+
+    Page.findOne({slug: slug}, function (err, page) {
+        if (err)
+            console.log(err);
+
+        if (!page) {
+            res.redirect('/');
+        } else {
+            res.render('index', {
+                title: page.title,
+                content: page.content
+            });
+        }
+    });
+
+
 });
 
 router.post('/',(req, res) => {
