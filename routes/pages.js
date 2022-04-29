@@ -53,7 +53,8 @@ router.post('/',(req, res) => {
             let json=JSON.parse(d);
             let exchangeRate=json.rate;
             console.log(exchangeRate);
-            res.render(path.resolve('views/index.ejs'),{title: "Home", ans: currency, c: exchangeRate});
+            res.render(path.resolve('C:\\Users\\mapol\\WebstormProjects\\untitled2\\views\\index.ejs'),{title: 'Home',
+                content: "home", ans: currency, c: exchangeRate});
         });
     });
 });

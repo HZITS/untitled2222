@@ -106,9 +106,9 @@ router.post('/reorder-page', function (req, res) {
 /*
  * GET edit page
  */
-router.get('/edit-page/:slug', function (req, res) {
+router.get('/edit-page/:id', function (req, res) {
 
-    Page.findOne({slug: req.params.slug}, function (err, page) {
+    Page.findById(req.params.id, function (err, page) {
         if (err) return console.log(err);
         res.render('admin/edit_page', ({
             title: page.title,
@@ -123,7 +123,7 @@ router.get('/edit-page/:slug', function (req, res) {
 /*
  * POST edit pages
  */
-router.post('/edit-page/:slug', function (req, res) {
+router.post('/edit-page/:id', function (req, res) {
 
     req.checkBody('title', 'title must have a value').notEmpty();
     req.checkBody('content', 'the content must have a value.').notEmpty();
@@ -132,7 +132,7 @@ router.post('/edit-page/:slug', function (req, res) {
     let slug = req.body.slug.replace(/\s+/g, '-').toLowerCase();
     if (slug == "") slug = title.replace(/\s+/g, '-').toLowerCase();
     let content = req.body.content;
-    let id = req.body.id;
+    let id = req.params.id;
 
     let errors = req.validationErrors();
 
@@ -169,7 +169,7 @@ router.post('/edit-page/:slug', function (req, res) {
                             return console.log(err);
 
                         req.flash('success', 'Page edited');
-                        res.redirect('/admin/pages/edit-page/'+page.slug);
+                        res.redirect('/admin/pages/edit-page/'+id);
                     });
 
                 });
