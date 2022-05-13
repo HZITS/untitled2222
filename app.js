@@ -12,7 +12,7 @@ var fileUpload = require('express-fileupload');
 var passport = require('passport');
 
 var config = require('./config/database.js');
-var port = 4000;
+// var port = 4000;
 
 // init app
 var app = express();
@@ -163,6 +163,11 @@ app.use('/', pages);
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
 
 // start the server
 app.listen(port, function (){
