@@ -166,7 +166,7 @@ app.use(function(req, res, next) {
 
 let port = process.env.PORT;
 if (port == null || port == "") {
-  port = 3000;
+  port = 8000;
 }
 
 // start the server
